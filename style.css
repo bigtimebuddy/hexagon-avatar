@@ -33,3 +33,8 @@ body {
 input[type=file] {
   display: none;
 }
+
+canvas {
+  display: block;
+  margin: 0 auto;
+}

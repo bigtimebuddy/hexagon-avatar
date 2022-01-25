@@ -1,3 +1,4 @@
+PIXI.utils.skipHello();
 const app = new PIXI.Application({
   width: 500,
   height: 500,
@@ -7,7 +8,21 @@ const app = new PIXI.Application({
 });
 app.stop();
 
-document.addEventListener('drop', ev => ev.preventDefault());
+document.addEventListener('drop', ev => {
+  ev.preventDefault();
+  const [file] = ev.dataTransfer.files;
+  if (file && file.type.startsWith('image/')) {
+    open(file);
+  }
+}, false);
+document.addEventListener('paste', ev => {
+  if (!ev.clipboardData) return;
+    const {items} = ev.clipboardData;
+    const file = items[0].getAsFile();
+    if (file && file.type.startsWith('image/')) {
+      open(file);
+    }
+}, false);
 document.addEventListener('dragover', ev => ev.preventDefault());
 
 const $ = document.querySelector.bind(document);
@@ -61,8 +76,7 @@ async function renderAvatar(url) {
   return result;
 }
 
-$imageInput.addEventListener('change', async (event) => {
-  const [file] = event.currentTarget.files;
+async function open(file) {
   if (!file) return;
   const dataURL = await new Promise(resolve => {
     const reader = new FileReader();
@@ -75,6 +89,11 @@ $imageInput.addEventListener('change', async (event) => {
   $clear.classList.remove('hidden');
   $download.href = href;
   document.body.appendChild(app.view);
+}
+
+$imageInput.addEventListener('change', async (event) => {
+  const [file] = event.currentTarget.files;
+  open(file);
 });
 
 $clear.addEventListener('click', () => {
