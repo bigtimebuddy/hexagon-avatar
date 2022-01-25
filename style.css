@@ -1,0 +1,35 @@
+body {
+  background-color: #fff;
+  text-align: center;
+  color: #666;
+  font-family: Helvetica, Arial, san-serif;
+}
+
+.btn {
+  border: 0;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px auto;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  background-color: #09f;
+  transition: all 0.3s;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.btn:hover {
+  background-color: #08d;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 3px #fff, 0px 0px 0px 6px #08d;
+}
+
+.hidden,
+input[type=file] {
+  display: none;
+}
