@@ -1,7 +1,7 @@
 PIXI.utils.skipHello();
 const app = new PIXI.Application({
-  width: 500,
-  height: 500,
+  width: 400,
+  height: 400,
   backgroundColor: 0xffffff,
   resolution: 2,
   autoDensity: true,
@@ -29,6 +29,8 @@ const $ = document.querySelector.bind(document);
 const $download = $('#downloadButton');
 const $imageInput = $('#imageInput');
 const $clear = $('#clearButton');
+const $body = $('body');
+const $result = $('#result');
 
 async function renderAvatar(url) {
   const texture = await PIXI.Texture.fromURL(url);
@@ -85,10 +87,10 @@ async function open(file) {
   });
   const href = await renderAvatar(dataURL);
   $download.download = file.name.split(".")[0] + ".png";
-  $download.classList.remove('hidden');
-  $clear.classList.remove('hidden');
+  $body.classList.remove('empty');
+  $body.classList.add('open');
   $download.href = href;
-  document.body.appendChild(app.view);
+  $result.appendChild(app.view);
 }
 
 $imageInput.addEventListener('change', async (event) => {
@@ -98,7 +100,7 @@ $imageInput.addEventListener('change', async (event) => {
 
 $clear.addEventListener('click', () => {
   $imageInput.value = '';
-  $download.classList.add('hidden');
-  $clear.classList.add('hidden');
-  document.body.removeChild(app.view);
+  $body.classList.remove('open');
+  $body.classList.add('empty');
+  $result.removeChild(app.view);
 });

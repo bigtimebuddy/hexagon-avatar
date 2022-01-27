@@ -1,5 +1,5 @@
 body {
-  background-color: #fff;
+  background-color: #eee;
   text-align: center;
   color: #666;
   font-family: Helvetica, Arial, san-serif;
@@ -28,9 +28,39 @@ body {
   outline: none;
   box-shadow: 0px 0px 0px 3px #fff, 0px 0px 0px 6px #08d;
 }
+.droparea,
+#result {
+  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.droparea {
+  border: 1px dotted #999;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+  text-decoration: underline;
+  color: #08d;
+}
+.droparea:hover {
+  border-style: solid;
+  border-color: #bbb;
+  background-color: #eee;
+}
 
 .hidden,
-input[type=file] {
+input[type=file],
+.open #fileInput,
+.empty #result,
+.empty #downloadButton,
+.empty #clearButton {
   display: none;
 }
 

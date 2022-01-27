@@ -7,15 +7,17 @@
     <title>Hexagon Avatar</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
-    <label class="btn" for="imageInput">
+  <body class="empty">
+    <h1>Hexagon Avatar</h1>
+    <label id="fileInput" class="droparea" for="imageInput">
       <input id="imageInput" type="file" accept=".png,.jpg,.jpeg,.webp" />
-      Browse...
+      Browse or drop a square image
     </label>
-    <a id="downloadButton" class="btn hidden" download>
+    <div id="result"></div>
+    <a id="downloadButton" class="btn" download>
       Download
     </a>
-    <button id="clearButton" class="btn hidden">
+    <button id="clearButton" class="btn">
       Clear
     </button>
     <script src="https://pixijs.download/v6.2.1/pixi.min.js"></script>
