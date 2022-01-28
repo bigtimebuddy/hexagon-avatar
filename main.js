@@ -69,7 +69,22 @@ async function renderAvatar(url) {
   app.stage.addChild(mask);
   app.render();
 
-  const result = app.renderer.plugins.extract.base64(app.stage);
+  const result = new Promise((resolve) => {
+    const img = app.renderer.plugins.extract.image(app.stage);
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const size = 400;
+      canvas.width = canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(
+        img,
+        (size - img.naturalWidth) / 2,
+        (size - img.naturalHeight) / 2
+      );
+      resolve(canvas.toDataURL());
+      canvas.width = canvas.height = 0;
+    };
+  });
 
   avatar.destroy(true);
   shape.destroy(true);
@@ -80,13 +95,22 @@ async function renderAvatar(url) {
 
 async function open(file) {
   if (!file) return;
-  const dataURL = await new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
-    reader.readAsDataURL(file);
-  });
+  let name;
+  let dataURL;
+  if (typeof file === 'string') {
+    name = file;
+    dataURL = file;
+  }
+  else {
+    name = file.name;
+    dataURL = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
   const href = await renderAvatar(dataURL);
-  $download.download = file.name.split(".")[0] + ".png";
+  $download.download = name.replace(/\.([a-z]{3,4})$/, '') + ".png";
   $body.classList.remove('empty');
   $body.classList.add('open');
   $download.href = href;
